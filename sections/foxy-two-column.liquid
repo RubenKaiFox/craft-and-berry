@@ -1,0 +1,241 @@
+<link rel="stylesheet" href="{{ 'foxy-two-column.css' | asset_url }}">
+
+<section class="foxy-two-column" id="FoxyTwoColumn-{{ section.id }}">
+  <div class="foxy-two-column__container page-width">
+    {% assign text_blocks = section.blocks | where: 'type', 'text_block' %}
+    {% assign image_blocks = section.blocks | where: 'type', 'image_block' %}
+
+    <div class="foxy-two-column__grid{% if section.settings.layout == 'image_first' %} foxy-two-column__grid--image-first{% endif %}">
+      
+      {% comment %} TEXT COLUMN (BLOCK 1) {% endcomment %}
+      <div class="foxy-two-column__text-col">
+        {% if text_blocks.size > 0 %}
+          {% for block in text_blocks %}
+            <div class="foxy-two-column__text-content" {{ block.shopify_attributes }}>
+              {% if block.settings.subheading != blank %}
+                <div class="foxy-two-column__subheading">{{ block.settings.subheading | escape }}</div>
+              {% endif %}
+              {% if block.settings.title != blank %}
+                <h2 class="foxy-two-column__title">{{ block.settings.title | escape }}</h2>
+              {% endif %}
+              {% if block.settings.text != blank %}
+                <div class="foxy-two-column__copy">{{ block.settings.text }}</div>
+              {% endif %}
+              {% if block.settings.button_label != blank %}
+                <a 
+                  href="{{ block.settings.button_link | default: '#' }}" 
+                  class="foxy-two-column__cta"
+                  style="--foxy-cta-bg: {{ block.settings.button_bg_color | default: '#9333ea' }}; --foxy-cta-color: {{ block.settings.button_text_color | default: '#ffffff' }};"
+                >
+                  {{ block.settings.button_label | escape }}
+                </a>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      {% comment %} IMAGE COLUMN (BLOCK 2 - OVERLAPPING IMAGES) {% endcomment %}
+      <div class="foxy-two-column__image-col">
+        {% if image_blocks.size > 0 %}
+          {% for block in image_blocks %}
+            {% assign valid_images_count = 0 %}
+            {% if block.settings.image_1 != blank %}{% assign valid_images_count = valid_images_count | plus: 1 %}{% endif %}
+            {% if block.settings.image_2 != blank %}{% assign valid_images_count = valid_images_count | plus: 1 %}{% endif %}
+            {% if block.settings.image_3 != blank %}{% assign valid_images_count = valid_images_count | plus: 1 %}{% endif %}
+
+            <div class="foxy-two-column__overlap-wrapper" data-count="{{ valid_images_count | default: 2 }}" {{ block.shopify_attributes }}>
+              {% if block.settings.image_1 != blank %}
+                <div class="foxy-two-column__card foxy-two-column__card--1">
+                  {{ block.settings.image_1 | image_url: width: 800 | image_tag: class: 'foxy-two-column__card-img', loading: 'lazy', alt: block.settings.image_1_name | default: 'Team Member 1' }}
+                  {% if block.settings.image_1_name != blank or block.settings.image_1_role != blank %}
+                    <div class="foxy-two-column__card-caption">
+                      {% if block.settings.image_1_name != blank %}<p class="foxy-two-column__card-title">{{ block.settings.image_1_name }}</p>{% endif %}
+                      {% if block.settings.image_1_role != blank %}<p class="foxy-two-column__card-subtitle">{{ block.settings.image_1_role }}</p>{% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              {% if block.settings.image_2 != blank %}
+                <div class="foxy-two-column__card foxy-two-column__card--2">
+                  {{ block.settings.image_2 | image_url: width: 800 | image_tag: class: 'foxy-two-column__card-img', loading: 'lazy', alt: block.settings.image_2_name | default: 'Team Member 2' }}
+                  {% if block.settings.image_2_name != blank or block.settings.image_2_role != blank %}
+                    <div class="foxy-two-column__card-caption">
+                      {% if block.settings.image_2_name != blank %}<p class="foxy-two-column__card-title">{{ block.settings.image_2_name }}</p>{% endif %}
+                      {% if block.settings.image_2_role != blank %}<p class="foxy-two-column__card-subtitle">{{ block.settings.image_2_role }}</p>{% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              {% if block.settings.image_3 != blank %}
+                <div class="foxy-two-column__card foxy-two-column__card--3">
+                  {{ block.settings.image_3 | image_url: width: 800 | image_tag: class: 'foxy-two-column__card-img', loading: 'lazy', alt: block.settings.image_3_name | default: 'Team Member 3' }}
+                  {% if block.settings.image_3_name != blank or block.settings.image_3_role != blank %}
+                    <div class="foxy-two-column__card-caption">
+                      {% if block.settings.image_3_name != blank %}<p class="foxy-two-column__card-title">{{ block.settings.image_3_name }}</p>{% endif %}
+                      {% if block.settings.image_3_role != blank %}<p class="foxy-two-column__card-subtitle">{{ block.settings.image_3_role }}</p>{% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Foxy Two Column Overlap",
+  "tag": "section",
+  "class": "section foxy-two-column-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Desktop Layout",
+      "options": [
+        { "value": "text_first", "label": "Text Left, Images Right" },
+        { "value": "image_first", "label": "Images Left, Text Right" }
+      ],
+      "default": "text_first"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Text Block",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Craft & Berry"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "A little about Craft & Berry"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Long Form Copy",
+          "default": "<p>Combines the best aspects of a bottle shop and a taproom. With six keg lines featuring ever-changing craft beers, over 400 different cans and bottles, and a selection of 70 artisan gins, rum, and vodka, there’s always something new to discover. The venue’s online shop provides access to live stock availability and the latest additions, including craft and real ale beer boxes, tonics, and snacks. Situated at 369 Ecclesall Road, Sheffield, Craft & Berry is a beloved spot for locals and visitors alike. The welcoming atmosphere, knowledgeable staff, and extensive selection make it a go-to destination for anyone looking to explore the world of craft beer and artisan spirits.</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color",
+          "label": "Button Background Color",
+          "default": "#9333ea"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button Text Color",
+          "default": "#ffffff"
+        }
+      ]
+    },
+    {
+      "type": "image_block",
+      "name": "Overlapping Images Block",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image 1 (Top / Back)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image 1"
+        },
+        {
+          "type": "text",
+          "id": "image_1_name",
+          "label": "Image 1 Name (Optional)",
+          "default": "Mark"
+        },
+        {
+          "type": "text",
+          "id": "image_1_role",
+          "label": "Image 1 Role (Optional)",
+          "default": "Owner"
+        },
+        {
+          "type": "header",
+          "content": "Image 2 (Overlapping Front)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image 2"
+        },
+        {
+          "type": "text",
+          "id": "image_2_name",
+          "label": "Image 2 Name (Optional)",
+          "default": "Sam"
+        },
+        {
+          "type": "text",
+          "id": "image_2_role",
+          "label": "Image 2 Role (Optional)",
+          "default": "Bar Manager"
+        },
+        {
+          "type": "header",
+          "content": "Image 3 (Optional 3rd Image)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image 3"
+        },
+        {
+          "type": "text",
+          "id": "image_3_name",
+          "label": "Image 3 Name (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "image_3_role",
+          "label": "Image 3 Role (Optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Foxy Two Column Overlap",
+      "blocks": [
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "image_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

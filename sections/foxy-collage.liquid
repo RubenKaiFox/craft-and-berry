@@ -1,0 +1,180 @@
+<link rel="stylesheet" href="{{ 'foxy-collage.css' | asset_url }}">
+<script src="{{ 'foxy-collage.js' | asset_url }}" defer></script>
+
+<section class="foxy-collage" id="FoxyCollage-{{ section.id }}">
+  <div class="foxy-collage__container page-width">
+    
+    {% if section.settings.title != blank or section.settings.subheading != blank %}
+      <div class="foxy-collage__header">
+        {% if section.settings.subheading != blank %}
+          <div class="foxy-collage__subheading">{{ section.settings.subheading | escape }}</div>
+        {% endif %}
+        {% if section.settings.title != blank %}
+          <h2 class="foxy-collage__title">{{ section.settings.title | escape }}</h2>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="foxy-collage__grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'collection' %}
+          {% assign collection = collections[block.settings.collection] %}
+          {% assign card_image = block.settings.custom_image | default: collection.featured_image | default: collection.products.first.featured_image %}
+          {% assign card_title = block.settings.title | default: collection.title | default: 'Collection' %}
+          {% assign tag_text = block.settings.tag | default: collection.title | default: 'COLLECTION' %}
+          {% assign tag_style = block.settings.tag_style | default: 'green' %}
+
+          <a href="{{ collection.url | default: '#' }}" class="foxy-collage__card" {{ block.shopify_attributes }}>
+            <div class="foxy-collage__tag foxy-collage__tag--{{ tag_style }}">
+              {{ tag_text | escape }}
+            </div>
+
+            <div class="foxy-collage__img-wrapper">
+              {% if card_image != blank %}
+                {{ card_image | image_url: width: 800 | image_tag: class: 'foxy-collage__img', loading: 'lazy', alt: card_title }}
+              {% else %}
+                <div class="foxy-collage__img foxy-collage__img--placeholder" style="background: #111; height: 100%; min-height: 250px;"></div>
+              {% endif %}
+
+              <div class="foxy-collage__card-overlay">
+                <h3 class="foxy-collage__card-title">
+                  <span>{{ card_title | escape }}</span>
+                  <span class="foxy-collage__card-arrow">&rarr;</span>
+                </h3>
+              </div>
+            </div>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% comment %} INTERACTIVE SPLIT HOVER BUTTON COMPONENT {% endcomment %}
+    <foxy-collage-split-button class="foxy-collage__footer">
+      <div class="foxy-collage__split-wrapper">
+        <div class="foxy-collage__split-container">
+          <span class="foxy-collage__split-single">
+            {{ section.settings.button_initial_label | default: 'See More' }}
+          </span>
+          <div class="foxy-collage__split-items">
+            <a href="{{ section.settings.button_1_link | default: '#' }}" class="foxy-collage__split-btn">
+              {{ section.settings.button_1_label | default: 'Breweries' }}
+            </a>
+            <a href="{{ section.settings.button_2_link | default: '#' }}" class="foxy-collage__split-btn">
+              {{ section.settings.button_2_label | default: 'Distilleries' }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </foxy-collage-split-button>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Foxy Collage",
+  "tag": "section",
+  "class": "section foxy-collage-section",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "EXPLORE OUR SELECTION"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Popular Breweries & Distilleries"
+    },
+    {
+      "type": "header",
+      "content": "Split Hover Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_initial_label",
+      "label": "Initial Button Text",
+      "default": "See More"
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "First Split Button Label",
+      "default": "Popular Breweries"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "First Split Button Link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Second Split Button Label",
+      "default": "Popular Distilleries"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Second Split Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection Card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom Title Override",
+          "info": "Optional: Override collection title"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Dietary Tag Label",
+          "info": "e.g. BEER, VODKA, GIN, CRAFT ALE"
+        },
+        {
+          "type": "select",
+          "id": "tag_style",
+          "label": "Tag Style",
+          "options": [
+            { "value": "green", "label": "Green Glow" },
+            { "value": "cyan", "label": "Cyan Glow" },
+            { "value": "purple", "label": "Purple Glow" }
+          ],
+          "default": "green"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Image Override"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Foxy Collage",
+      "blocks": [
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" }
+      ]
+    }
+  ]
+}
+{% endschema %}

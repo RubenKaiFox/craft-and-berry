@@ -1,0 +1,229 @@
+<link rel="stylesheet" href="{{ 'foxy-socials.css' | asset_url }}">
+
+{% assign event_collection = collections[section.settings.collection] %}
+{% assign card_image = section.settings.image | default: event_collection.featured_image | default: event_collection.image | default: event_collection.products.first.featured_image %}
+{% assign card_title = section.settings.title | default: event_collection.title | default: 'Upcoming Events' %}
+{% assign tag_text = section.settings.tag | default: 'SOCIALS & EVENTS' %}
+{% assign tag_style = section.settings.tag_style | default: 'purple' %}
+
+<section class="foxy-socials" id="FoxySocials-{{ section.id }}">
+  <div class="foxy-socials__wrapper">
+    <div class="foxy-socials__grid">
+      
+      {% comment %} LEFT COLUMN (50% WIDTH): FEATURED IMAGE CARD LINKING TO COLLECTION {% endcomment %}
+      <div class="foxy-socials__col foxy-socials__col--left">
+        <a href="{{ section.settings.button_link | default: event_collection.url | default: '/collections/socials-and-events' }}" class="foxy-socials__card foxy-socials__card--image">
+          
+          <div class="foxy-socials__tag foxy-socials__tag--{{ tag_style }}">
+            {{ tag_text | escape }}
+          </div>
+
+          <div class="foxy-socials__img-wrapper">
+            {% if card_image != blank %}
+              {{ card_image | image_url: width: 1600 | image_tag: class: 'foxy-socials__img', loading: 'lazy', alt: card_title }}
+            {% else %}
+              <div class="foxy-socials__img foxy-socials__img--placeholder"></div>
+            {% endif %}
+
+            <div class="foxy-socials__card-overlay">
+              {% if section.settings.subheading != blank %}
+                <div class="foxy-socials__card-subheading">{{ section.settings.subheading | escape }}</div>
+              {% endif %}
+              <h2 class="foxy-socials__card-title">
+                <span>{{ card_title | escape }}</span>
+                <span class="foxy-socials__card-arrow">&rarr;</span>
+              </h2>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      {% comment %} RIGHT COLUMN (50% WIDTH): WINE LIST MENU OF COLLECTION PRODUCTS {% endcomment %}
+      <div class="foxy-socials__col foxy-socials__col--right">
+        <div class="foxy-socials__card foxy-socials__card--menu">
+          
+          <div class="foxy-socials__menu-header">
+            {% if section.settings.menu_subheading != blank %}
+              <div class="foxy-socials__menu-subheading">{{ section.settings.menu_subheading | escape }}</div>
+            {% endif %}
+            <h3 class="foxy-socials__menu-title">{{ section.settings.menu_title | default: 'Upcoming Schedule' | escape }}</h3>
+          </div>
+
+          <ul class="foxy-socials__menu-list" role="list">
+            {% if event_collection != blank and event_collection.products.size > 0 %}
+              {% for product in event_collection.products limit: section.settings.products_limit %}
+                <li class="foxy-socials__menu-item">
+                  <a href="{{ product.url }}" class="foxy-socials__menu-link">
+                    <span class="foxy-socials__product-name">{{ product.title | escape }}</span>
+                    <span class="foxy-socials__menu-dots"></span>
+                    <span class="foxy-socials__product-price">
+                      {% if product.price_varies %}
+                        <span class="foxy-socials__price-from">From </span>
+                      {% endif %}
+                      {{ product.price | money }}
+                    </span>
+                    <span class="foxy-socials__menu-arrow">&rarr;</span>
+                  </a>
+                </li>
+              {% endfor %}
+            {% else %}
+              {% comment %} Styled placeholder menu items for empty state / theme editor {% endcomment %}
+              <li class="foxy-socials__menu-item">
+                <a href="#" class="foxy-socials__menu-link">
+                  <span class="foxy-socials__product-name">Craft Beer Tasting Ticket</span>
+                  <span class="foxy-socials__menu-dots"></span>
+                  <span class="foxy-socials__product-price">£15.00</span>
+                  <span class="foxy-socials__menu-arrow">&rarr;</span>
+                </a>
+              </li>
+              <li class="foxy-socials__menu-item">
+                <a href="#" class="foxy-socials__menu-link">
+                  <span class="foxy-socials__product-name">Artisan Gin Masterclass</span>
+                  <span class="foxy-socials__menu-dots"></span>
+                  <span class="foxy-socials__product-price">£25.00</span>
+                  <span class="foxy-socials__menu-arrow">&rarr;</span>
+                </a>
+              </li>
+              <li class="foxy-socials__menu-item">
+                <a href="#" class="foxy-socials__menu-link">
+                  <span class="foxy-socials__product-name">Friday Night Social Club</span>
+                  <span class="foxy-socials__menu-dots"></span>
+                  <span class="foxy-socials__product-price">£10.00</span>
+                  <span class="foxy-socials__menu-arrow">&rarr;</span>
+                </a>
+              </li>
+              <li class="foxy-socials__menu-item">
+                <a href="#" class="foxy-socials__menu-link">
+                  <span class="foxy-socials__product-name">Meet the Brewer Night</span>
+                  <span class="foxy-socials__menu-dots"></span>
+                  <span class="foxy-socials__product-price">£12.50</span>
+                  <span class="foxy-socials__menu-arrow">&rarr;</span>
+                </a>
+              </li>
+              <li class="foxy-socials__menu-item">
+                <a href="#" class="foxy-socials__menu-link">
+                  <span class="foxy-socials__product-name">Sunday Tap Takeover</span>
+                  <span class="foxy-socials__menu-dots"></span>
+                  <span class="foxy-socials__product-price">Free</span>
+                  <span class="foxy-socials__menu-arrow">&rarr;</span>
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+
+          {% if section.settings.button_label != blank %}
+            <div class="foxy-socials__menu-footer">
+              <a href="{{ section.settings.button_link | default: event_collection.url | default: '/collections/socials-and-events' }}" class="foxy-socials__btn">
+                <span>{{ section.settings.button_label | escape }}</span>
+                <span class="foxy-socials__btn-arrow">&rarr;</span>
+              </a>
+            </div>
+          {% endif %}
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Foxy Socials & Events",
+  "tag": "section",
+  "class": "section foxy-socials-section",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Select the Socials & Events collection to loop products from"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Featured Card Image",
+      "info": "Optional override for left column card image. Defaults to collection featured image."
+    },
+    {
+      "type": "header",
+      "content": "Left Column Settings"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Image Card Subheading",
+      "default": "WHAT'S ON AT CRAFT & BERRY"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Image Card Title",
+      "default": "Upcoming Events"
+    },
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Pill Tag Label",
+      "default": "SOCIALS & EVENTS"
+    },
+    {
+      "type": "select",
+      "id": "tag_style",
+      "label": "Tag Style",
+      "options": [
+        { "value": "purple", "label": "Purple Glow" },
+        { "value": "green", "label": "Green Glow" },
+        { "value": "cyan", "label": "Cyan Glow" }
+      ],
+      "default": "purple"
+    },
+    {
+      "type": "header",
+      "content": "Right Column (Wine List) Settings"
+    },
+    {
+      "type": "text",
+      "id": "menu_subheading",
+      "label": "Menu Subheading",
+      "default": "EVENTS & TASTINGS"
+    },
+    {
+      "type": "text",
+      "id": "menu_title",
+      "label": "Menu Title",
+      "default": "Upcoming Schedule"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "Products to Show",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Menu Footer Button Label",
+      "default": "View All Events"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Custom Button / Card Redirect Link",
+      "info": "Optional override link. Defaults to collection URL."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Foxy Socials & Events",
+      "settings": {
+        "collection": "socials-and-events",
+        "title": "Upcoming Events"
+      }
+    }
+  ]
+}
+{% endschema %}

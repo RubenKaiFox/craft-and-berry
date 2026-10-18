@@ -4,6 +4,18 @@
   <script src="{{ 'foxy-opening-times.js' | asset_url }}" defer></script>
 {% endunless %}
 
+{%- comment -%}
+  NOTE: foxy-opening-times.js depends on the following markup contract:
+  - .foxy-opening-times (with the holiday data-* attributes)
+  - .opening-times-table, where the FIRST <tr> is the header row
+  - each day row's first <td> contains ONLY the weekday name (e.g. "Monday")
+  - opening/closing times live in td:nth-child(2) / td:nth-child(3)
+  - .exceptions-note (populated with holiday exceptions)
+  Keep these intact when restyling.
+{%- endcomment -%}
+
+{%- assign days = 'monday,tuesday,wednesday,thursday,friday,saturday,sunday' | split: ',' -%}
+
 <section
   class="foxy-opening-times"
   data-christmas-eve="{{ section.settings.christmas_eve }}"
@@ -14,54 +26,91 @@
   data-bank-holidays="{{ section.settings.bank_holidays }}"
   data-bank-holiday-dates="{{ section.settings.bank_holiday_dates | default: '' }}"
 >
-  <div class="container">
-    <h2 class="section-title">
-      {{ section.settings.title }}
-    </h2>
-    <table class="opening-times-table">
-      <tr>
-        <th>Day</th>
-        <th>Opening Time</th>
-        <th>Closing Time</th>
-      </tr>
-      <tr>
-        <td>Monday</td>
-        <td>{{ section.settings.opening_time_monday }}</td>
-        <td>{{ section.settings.closing_time_monday }}</td>
-      </tr>
-      <tr>
-        <td>Tuesday</td>
-        <td>{{ section.settings.opening_time_tuesday }}</td>
-        <td>{{ section.settings.closing_time_tuesday }}</td>
-      </tr>
-      <tr>
-        <td>Wednesday</td>
-        <td>{{ section.settings.opening_time_wednesday }}</td>
-        <td>{{ section.settings.closing_time_wednesday }}</td>
-      </tr>
-      <tr>
-        <td>Thursday</td>
-        <td>{{ section.settings.opening_time_thursday }}</td>
-        <td>{{ section.settings.closing_time_thursday }}</td>
-      </tr>
-      <tr>
-        <td>Friday</td>
-        <td>{{ section.settings.opening_time_friday }}</td>
-        <td>{{ section.settings.closing_time_friday }}</td>
-      </tr>
-      <tr>
-        <td>Saturday</td>
-        <td>{{ section.settings.opening_time_saturday }}</td>
-        <td>{{ section.settings.closing_time_saturday }}</td>
-      </tr>
-      <tr>
-        <td>Sunday</td>
-        <td>{{ section.settings.opening_time_sunday }}</td>
-        <td>{{ section.settings.closing_time_sunday }}</td>
-      </tr>
-    </table>
-    <div class="exceptions-note" aria-live="polite"></div>
+  <div class="foxy-opening-times__inner">
+    <header class="foxy-opening-times__intro">
+      {%- if section.settings.subheading != blank -%}
+        <p class="foxy-opening-times__eyebrow">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+
+      <h2 class="section-title foxy-opening-times__title">
+        {{ section.settings.title }}
+      </h2>
+
+      <div class="foxy-opening-times__status" data-status hidden>
+        <span class="foxy-opening-times__status-dot" aria-hidden="true"></span>
+        <span class="foxy-opening-times__status-text" data-status-text></span>
+      </div>
+
+      {%- if section.settings.text != blank -%}
+        <div class="foxy-opening-times__copy">{{ section.settings.text }}</div>
+      {%- endif -%}
+
+      <div class="exceptions-note" aria-live="polite"></div>
+    </header>
+
+    <div class="foxy-opening-times__panel">
+      <table class="opening-times-table">
+        <thead>
+          <tr>
+            <th scope="col">Day</th>
+            <th scope="col">Opening Time</th>
+            <th scope="col">Closing Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for day in days -%}
+            {%- assign open_key = 'opening_time_' | append: day -%}
+            {%- assign close_key = 'closing_time_' | append: day -%}
+            {%- assign open_val = section.settings[open_key] | strip -%}
+            {%- assign close_val = section.settings[close_key] | strip -%}
+            {%- assign open_check = open_val | downcase -%}
+            <tr class="foxy-opening-times__row{% if open_val == blank or open_check == 'closed' %} is-closed{% endif %}">
+              <td>{{ day | capitalize }}</td>
+              <td>{{ open_val }}</td>
+              <td>{{ close_val }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
   </div>
+
+  <script>
+    (() => {
+      // Presentational only: highlights today's row and shows a status chip.
+      // Runs after foxy-opening-times.js so holiday closures are respected.
+      const section = document.currentScript.closest('.foxy-opening-times');
+      if (!section) return;
+
+      const run = () => {
+        const today = new Date().toLocaleDateString('en-GB', { weekday: 'long' });
+        const rows = Array.from(section.querySelectorAll('.opening-times-table tbody tr'));
+        const row = rows.find((r) => r.querySelector('td:first-child')?.textContent.trim() === today);
+        if (!row) return;
+
+        row.classList.add('is-today');
+        row.setAttribute('aria-current', 'date');
+
+        const status = section.querySelector('[data-status]');
+        const statusText = section.querySelector('[data-status-text]');
+        if (!status || !statusText) return;
+
+        const open = row.querySelector('td:nth-child(2)')?.textContent.trim() || '';
+        const close = row.querySelector('td:nth-child(3)')?.textContent.trim() || '';
+        const isClosed = row.classList.contains('closed') || row.classList.contains('is-closed') || !open || /^closed$/i.test(open);
+
+        status.classList.toggle('is-closed', isClosed);
+        statusText.textContent = isClosed ? 'Closed today' : `Open today · ${open}${close ? ' – ' + close : ''}`;
+        status.hidden = false;
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => setTimeout(run, 0));
+      } else {
+        run();
+      }
+    })();
+  </script>
 </section>
 
 {% schema %}
@@ -74,9 +123,21 @@
     },
     {
       "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Visit the shop"
+    },
+    {
+      "type": "text",
       "id": "title",
       "label": "Section Title",
       "default": "Opening Times"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Intro text",
+      "info": "Optional short blurb shown beside the timetable."
     },
     {
       "type": "checkbox",

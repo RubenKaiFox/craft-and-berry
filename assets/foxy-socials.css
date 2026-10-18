@@ -1,0 +1,415 @@
+/* ==========================================================================
+   FOXY SOCIALS SECTION
+   Dark theme, 50/50 2-column grid, edge-to-edge full height left image, wine-list menu
+   ========================================================================== */
+
+.foxy-socials {
+  background-color: var(--foxy-bg, #000000);
+  color: var(--foxy-text, #ffffff);
+  width: 100%;
+  padding: 0; /* Zero padding on section container */
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.foxy-socials__wrapper {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.foxy-socials__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+@media screen and (min-width: 990px) {
+  .foxy-socials__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Exact 50/50 2-column split */
+    gap: 40px;
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 0; /* Left image touches viewport edge flush */
+    padding-right: max(1.5rem, calc((100vw - var(--page-width, 1500px)) / 2 + 5rem));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   LEFT COLUMN: 50% FEATURED IMAGE CARD (FULL SURFACE X & Y, 0 PADDING)
+   -------------------------------------------------------------------------- */
+.foxy-socials__col--left {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.foxy-socials__card {
+  position: relative;
+  background: #0d0d12;
+  box-sizing: border-box;
+}
+
+.foxy-socials__card--image {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  flex: 1 1 100%;
+  position: relative;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+@media screen and (max-width: 989px) {
+  .foxy-socials__card--image {
+    min-height: 380px;
+    aspect-ratio: 4 / 3;
+  }
+}
+
+.foxy-socials__card--image:hover .foxy-socials__img {
+  transform: scale(1.04);
+}
+
+.foxy-socials__img-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 0 !important;
+  margin: 0;
+  padding: 0;
+}
+
+.foxy-socials__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0 !important;
+  margin: 0;
+  padding: 0;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.foxy-socials__img--placeholder {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 30% 30%, #1a1a24 0%, #0d0d12 100%);
+  border-radius: 0 !important;
+}
+
+.foxy-socials__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.88) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 36px 36px 36px max(1.5rem, calc((100vw - var(--page-width, 1500px)) / 2 + 5rem));
+  z-index: 2;
+  box-sizing: border-box;
+  border-radius: 0 !important;
+}
+
+@media screen and (max-width: 989px) {
+  .foxy-socials__card-overlay {
+    padding: 24px 24px 24px 1.5rem;
+  }
+}
+
+.foxy-socials__card-subheading {
+  font-family: monospace, Courier, monospace;
+  font-size: 0.85rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #a1a1aa;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.foxy-socials__card-title {
+  font-family: monospace, Courier, monospace;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@media screen and (max-width: 768px) {
+  .foxy-socials__card-title {
+    font-size: 1.65rem;
+  }
+}
+
+.foxy-socials__card-arrow {
+  display: inline-block;
+  color: #c084fc;
+  transition: transform 0.3s ease, color 0.3s ease;
+  font-weight: 400;
+}
+
+.foxy-socials__card--image:hover .foxy-socials__card-arrow {
+  transform: translateX(8px);
+  color: #a855f7;
+}
+
+/* TAG PILL */
+.foxy-socials__tag {
+  position: absolute;
+  top: 36px;
+  left: max(1.5rem, calc((100vw - var(--page-width, 1500px)) / 2 + 5rem));
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-family: monospace, Courier, monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  pointer-events: none;
+}
+
+@media screen and (max-width: 989px) {
+  .foxy-socials__tag {
+    top: 24px;
+    left: 1.5rem;
+  }
+}
+
+.foxy-socials__tag--green {
+  background: rgba(16, 185, 129, 0.18);
+  border: 1.5px solid #10b981;
+  color: #10b981;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.3);
+}
+
+.foxy-socials__tag--cyan {
+  background: rgba(6, 182, 212, 0.18);
+  border: 1.5px solid #06b6d4;
+  color: #06b6d4;
+  box-shadow: 0 0 14px rgba(6, 182, 212, 0.3);
+}
+
+.foxy-socials__tag--purple {
+  background: rgba(168, 85, 247, 0.18);
+  border: 1.5px solid #a855f7;
+  color: #c084fc;
+  box-shadow: 0 0 14px rgba(168, 85, 247, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   RIGHT COLUMN: 50% WINE LIST MENU CARD (VERTICALLY CENTERED CARD BOX)
+   -------------------------------------------------------------------------- */
+.foxy-socials__col--right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center the card box in column */
+  width: 100%;
+  height: 100%;
+  padding: 40px 0; /* 40px top & bottom padding on right column */
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 989px) {
+  .foxy-socials__col--right {
+    padding: 40px 1.5rem;
+  }
+}
+
+.foxy-socials__card--menu {
+  width: 100%;
+  height: auto; /* Natural height so the card box floats vertically centered */
+  flex: 0 0 auto;
+  padding: 36px 32px;
+  border-radius: 18px;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  background: radial-gradient(circle at 80% 20%, rgba(26, 16, 38, 0.4) 0%, #0d0d12 70%);
+}
+
+.foxy-socials__menu-header {
+  margin-bottom: 4px;
+}
+
+.foxy-socials__menu-subheading {
+  font-family: monospace, Courier, monospace;
+  font-size: 0.8rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #a1a1aa;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.foxy-socials__menu-title {
+  font-family: monospace, Courier, monospace;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  padding-bottom: 16px;
+  border-bottom: 1.5px dashed rgba(255, 255, 255, 0.15);
+  letter-spacing: -0.3px;
+}
+
+.foxy-socials__menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.foxy-socials__menu-item {
+  margin: 0;
+  padding: 0;
+}
+
+.foxy-socials__menu-link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  text-decoration: none;
+  color: inherit;
+  padding: 10px 12px;
+  border-radius: 10px;
+  transition: background 0.25s ease, transform 0.25s ease;
+  font-family: monospace, Courier, monospace;
+}
+
+.foxy-socials__menu-link:hover {
+  background: rgba(147, 51, 234, 0.12);
+  transform: translateX(4px);
+}
+
+.foxy-socials__product-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #f4f4f5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 68%;
+  transition: color 0.25s ease;
+}
+
+.foxy-socials__menu-link:hover .foxy-socials__product-name {
+  color: #c084fc;
+}
+
+.foxy-socials__menu-dots {
+  flex: 1;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.22);
+  margin: 0 10px 4px 10px;
+  opacity: 0.7;
+}
+
+.foxy-socials__product-price {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #34d399;
+  white-space: nowrap;
+  font-family: monospace, Courier, monospace;
+}
+
+.foxy-socials__price-from {
+  font-size: 0.75rem;
+  color: #a1a1aa;
+  font-weight: 400;
+}
+
+.foxy-socials__menu-arrow {
+  font-size: 0.95rem;
+  color: #a1a1aa;
+  margin-left: 8px;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.25s ease;
+}
+
+.foxy-socials__menu-link:hover .foxy-socials__menu-arrow {
+  opacity: 1;
+  transform: translateX(0);
+  color: #c084fc;
+}
+
+/* WINE LIST FOOTER BUTTON */
+.foxy-socials__menu-footer {
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.foxy-socials__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 20px;
+  background-color: rgba(147, 51, 234, 0.15);
+  border: 1.5px solid #9333ea;
+  border-radius: 10px;
+  color: #ffffff;
+  font-family: monospace, Courier, monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(147, 51, 234, 0.2);
+  box-sizing: border-box;
+}
+
+.foxy-socials__btn:hover {
+  background-color: #9333ea;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(147, 51, 234, 0.5);
+}
+
+.foxy-socials__btn-arrow {
+  transition: transform 0.3s ease;
+}
+
+.foxy-socials__btn:hover .foxy-socials__btn-arrow {
+  transform: translateX(5px);
+}

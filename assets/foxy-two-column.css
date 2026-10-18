@@ -1,0 +1,285 @@
+/* ==========================================================================
+   FOXY TWO COLUMN SECTION
+   Dark theme, monospace typography, overlapping square/rectangle images
+   ========================================================================== */
+
+.foxy-two-column {
+  background-color: var(--foxy-bg, #000000);
+  color: var(--foxy-text, #ffffff);
+  padding: 80px 0 120px 0;
+  position: relative;
+  overflow: visible;
+}
+
+.foxy-two-column__container {
+  width: 100%;
+  max-width: var(--page-width, 1500px);
+  margin: 0 auto;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 768px) {
+  .foxy-two-column__container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.foxy-two-column__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.foxy-two-column__grid--image-first {
+  grid-template-columns: 1fr 1fr;
+}
+.foxy-two-column__grid--image-first .foxy-two-column__text-col {
+  order: 2;
+}
+.foxy-two-column__grid--image-first .foxy-two-column__image-col {
+  order: 1;
+}
+
+/* --------------------------------------------------------------------------
+   TEXT COLUMN
+   -------------------------------------------------------------------------- */
+.foxy-two-column__text-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: monospace, monospace;
+}
+
+.foxy-two-column__subheading {
+  font-family: monospace, Courier, monospace;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #a1a1aa;
+  margin: 0 0 10px 0;
+  font-weight: 500;
+}
+
+.foxy-two-column__title {
+  font-family: monospace, Courier, monospace;
+  font-size: 2.25rem;
+  line-height: 1.25;
+  color: #ffffff;
+  margin: 0 0 20px 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.foxy-two-column__copy {
+  font-family: monospace, Courier, monospace;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #d4d4d8;
+  margin-bottom: 25px;
+}
+
+.foxy-two-column__copy p {
+  margin: 0 0 1em 0;
+}
+.foxy-two-column__copy p:last-child {
+  margin-bottom: 0;
+}
+
+.foxy-two-column__cta {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 12px 28px;
+  background-color: var(--foxy-cta-bg, #9333ea);
+  color: var(--foxy-cta-color, #ffffff);
+  border-radius: 8px;
+  font-family: monospace, Courier, monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(147, 51, 234, 0.3);
+}
+
+.foxy-two-column__cta:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(147, 51, 234, 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   IMAGE COLUMN (OVERLAPPING LAYOUT)
+   -------------------------------------------------------------------------- */
+.foxy-two-column__image-col {
+  width: 100%;
+}
+
+.foxy-two-column__overlap-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  aspect-ratio: 1 / 0.95;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.foxy-two-column__card {
+  position: absolute;
+  background: #0d0d12;
+  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
+}
+
+.foxy-two-column__card:hover {
+  z-index: 10 !important;
+  transform: scale(1.03) !important;
+  border-color: rgba(147, 51, 234, 0.6);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.9), 0 0 20px rgba(147, 51, 234, 0.3);
+}
+
+.foxy-two-column__card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+}
+
+.foxy-two-column__card-caption {
+  padding: 10px 14px;
+  background: rgba(13, 13, 18, 0.95);
+  font-family: monospace, Courier, monospace;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.foxy-two-column__card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.foxy-two-column__card-subtitle {
+  font-size: 0.8rem;
+  color: #a1a1aa;
+  margin-top: 2px;
+}
+
+/* 2-Image Overlap Math (Desktop) */
+.foxy-two-column__overlap-wrapper[data-count="2"] .foxy-two-column__card--1 {
+  top: 0%;
+  left: 0%;
+  width: 60%;
+  aspect-ratio: 1 / 1;
+  z-index: 1;
+}
+
+.foxy-two-column__overlap-wrapper[data-count="2"] .foxy-two-column__card--2 {
+  top: 25%;
+  left: 36%;
+  width: 60%;
+  aspect-ratio: 1 / 1;
+  z-index: 2;
+  border-color: rgba(147, 51, 234, 0.35);
+}
+
+/* 3-Image Overlap Math (Desktop) */
+.foxy-two-column__overlap-wrapper[data-count="3"] .foxy-two-column__card--1 {
+  top: 0%;
+  left: 0%;
+  width: 52%;
+  aspect-ratio: 1 / 1;
+  z-index: 1;
+}
+
+.foxy-two-column__overlap-wrapper[data-count="3"] .foxy-two-column__card--2 {
+  top: 22%;
+  left: 26%;
+  width: 52%;
+  aspect-ratio: 1 / 1;
+  z-index: 2;
+  border-color: rgba(147, 51, 234, 0.35);
+}
+
+.foxy-two-column__overlap-wrapper[data-count="3"] .foxy-two-column__card--3 {
+  top: 44%;
+  left: 50%;
+  width: 46%;
+  aspect-ratio: 1 / 1;
+  z-index: 3;
+}
+
+/* 1-Image Single Placement */
+.foxy-two-column__overlap-wrapper[data-count="1"] .foxy-two-column__card--1 {
+  position: relative;
+  width: 80%;
+  aspect-ratio: 1 / 1;
+}
+
+/* --------------------------------------------------------------------------
+   MOBILE RESPONSIVENESS (< 769px)
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 768px) {
+  .foxy-two-column {
+    padding: 40px 0 60px 0;
+  }
+
+  .foxy-two-column__grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .foxy-two-column__text-col {
+    order: 1 !important;
+    text-align: center;
+    align-items: center;
+  }
+
+  .foxy-two-column__title {
+    font-size: 1.75rem;
+  }
+
+  .foxy-two-column__cta {
+    align-self: center;
+  }
+
+  .foxy-two-column__image-col {
+    order: 2 !important;
+  }
+
+  .foxy-two-column__overlap-wrapper {
+    position: static;
+    min-height: auto;
+    aspect-ratio: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .foxy-two-column__card {
+    position: static !important;
+    display: inline-block;
+    vertical-align: top;
+    width: calc(50% - 10px) !important;
+    max-width: 220px;
+    aspect-ratio: 1 / 1 !important;
+    margin: 0;
+    transform: none !important;
+  }
+
+  .foxy-two-column__card:hover {
+    transform: none !important;
+  }
+}

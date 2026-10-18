@@ -25,34 +25,39 @@
         "image_fit": "cover"
       }
     },
-    "rich_text": {
-      "type": "rich-text",
+    "foxy_two_column": {
+      "type": "foxy-two-column",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "text_block": {
+          "type": "text_block",
           "settings": {
-            "heading": "A little about Craft & Berry",
-            "heading_size": "h1"
+            "subheading": "Craft & Berry",
+            "title": "A little about Craft & Berry",
+            "text": "<p>Combines the best aspects of a bottle shop and a taproom. With six keg lines featuring ever-changing craft beers, over 400 different cans and bottles, and a selection of 70 artisan gins, rum, and vodka, there’s always something new to discover. The venue’s online shop provides access to live stock availability and the latest additions, including craft and real ale beer boxes, tonics, and snacks. Situated at 369 Ecclesall Road, Sheffield, Craft & Berry is a beloved spot for locals and visitors alike. The welcoming atmosphere, knowledgeable staff, and extensive selection make it a go-to destination for anyone looking to explore the world of craft beer and artisan spirits.</p>",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/all",
+            "button_bg_color": "#9333ea",
+            "button_text_color": "#ffffff"
           }
         },
-        "text": {
-          "type": "text",
+        "image_block": {
+          "type": "image_block",
           "settings": {
-            "text": "<p>Craft & Berry</p><p> Combines the best aspects of a bottle shop and a taproom. With six<br/>keg lines featuring ever-changing craft beers, over 400 different cans and<br/>bottles, and a selection of 70 artisan<br/>gins, rum, and vodka, there’s always<br/>something new to discover. The venue’s online shop provides access to live stock availability and the latest additions,<br/>including craft and real ale beer boxes, tonics, and snacks. Situated at 369 Ecclesall Road, Sheffield, Craft & Berry is a beloved spot for locals and visitors alike. The welcoming atmosphere,<br/>knowledgeable staff, and extensive selection make it a go-to destination for<br/>anyone looking to explore the world of craft beer and artisan spirits.<br/></p>"
+            "image_1": "shopify://shop_images/IMG-20250720-WA0007.jpg",
+            "image_1_name": "Mark",
+            "image_1_role": "Owner",
+            "image_2": "shopify://shop_images/1000003940.jpg",
+            "image_2_name": "Sam",
+            "image_2_role": "Bar Manager"
           }
         }
       },
       "block_order": [
-        "heading",
-        "text"
+        "text_block",
+        "image_block"
       ],
       "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "scheme-1",
-        "full_width": true,
-        "padding_top": 52,
-        "padding_bottom": 52
+        "layout": "text_first"
       }
     },
     "foxy_dynamic_product_carousel_GfVzJh": {
@@ -73,159 +78,88 @@
         "dynamic_products_empty_string": "Nothing to see here"
       }
     },
-    "collection_list_g4D9yc": {
-      "type": "collection-list",
+    "foxy_collage": {
+      "type": "foxy-collage",
       "blocks": {
-        "featured_collection_FehcYH": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "abbeydale-brewery"
-          }
-        },
-        "featured_collection_RdryzE": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "brew-york"
-          }
-        },
-        "featured_collection_AaxApG": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "triple-point-brewing"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_FehcYH",
-        "featured_collection_RdryzE",
-        "featured_collection_AaxApG"
-      ],
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "Popular Breweries",
-        "heading_size": "h0",
-        "image_ratio": "square",
-        "columns_desktop": 3,
-        "color_scheme": "",
-        "show_view_all": false,
-        "show_breweries": true,
-        "show_distileries": false,
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 52,
-        "padding_bottom": 52
-      }
-    },
-    "collection_list_dM4mVe": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_Na6c6W": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "danvm"
-          }
-        },
-        "featured_collection_DQR3Pw": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "watertons-reserve"
-          }
-        },
-        "featured_collection_gmnaNj": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "sheffield-distillery"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_Na6c6W",
-        "featured_collection_DQR3Pw",
-        "featured_collection_gmnaNj"
-      ],
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "Popular Distilleries",
-        "heading_size": "h1",
-        "image_ratio": "square",
-        "columns_desktop": 3,
-        "color_scheme": "",
-        "show_view_all": false,
-        "show_breweries": false,
-        "show_distileries": true,
-        "columns_mobile": "1",
-        "swipe_on_mobile": true,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "collage": {
-      "type": "collage",
-      "blocks": {
-        "collection-0": {
+        "col_1": {
           "type": "collection",
           "settings": {
-            "collection": "socials-and-events"
-          }
-        }
-      },
-      "block_order": [
-        "collection-0"
-      ],
-      "settings": {
-        "heading": "What's on at Craft & Berry",
-        "heading_size": "h0",
-        "desktop_layout": "left",
-        "mobile_layout": "collage",
-        "card_styles": "product-card-wrapper",
-        "color_scheme": "scheme-1",
-        "padding_top": 52,
-        "padding_bottom": 52
-      }
-    },
-    "multicolumn": {
-      "type": "multicolumn",
-      "blocks": {
-        "column1": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/IMG-20250720-WA0007.jpg",
-            "title": "<strong>Mark | Owner</strong>",
-            "text": "<p>\"I've been in the bar and ale trade for over 20 years and in nearly as many countries, I love what I do and am totally in my element when behind the bar\" </p>",
-            "link_label": "",
-            "link": ""
+            "collection": "abbeydale-brewery",
+            "tag": "CRAFT BEER",
+            "tag_style": "green"
           }
         },
-        "column2": {
-          "type": "column",
+        "col_2": {
+          "type": "collection",
           "settings": {
-            "image": "shopify://shop_images/1000003940.jpg",
-            "title": "<strong>Sam | Bar Manager</strong>",
-            "text": "<p>\"I started  several years ago working at Craft & Berry, and have since worked my way up to Bar Manager, I have a product knowledge and passion that's hard to match\" </p>",
-            "link_label": "",
-            "link": ""
+            "collection": "brew-york",
+            "tag": "IPA",
+            "tag_style": "cyan"
+          }
+        },
+        "col_3": {
+          "type": "collection",
+          "settings": {
+            "collection": "triple-point-brewing",
+            "tag": "BREWERY",
+            "tag_style": "purple"
+          }
+        },
+        "col_4": {
+          "type": "collection",
+          "settings": {
+            "collection": "danvm",
+            "tag": "GIN",
+            "tag_style": "cyan"
+          }
+        },
+        "col_5": {
+          "type": "collection",
+          "settings": {
+            "collection": "watertons-reserve",
+            "tag": "ARTISAN GIN",
+            "tag_style": "green"
+          }
+        },
+        "col_6": {
+          "type": "collection",
+          "settings": {
+            "collection": "sheffield-distillery",
+            "tag": "DISTILLERY",
+            "tag_style": "purple"
           }
         }
       },
       "block_order": [
-        "column1",
-        "column2"
+        "col_1",
+        "col_2",
+        "col_3",
+        "col_4",
+        "col_5",
+        "col_6"
       ],
       "settings": {
-        "title": "Meet the team",
-        "heading_size": "h0",
-        "image_width": "half",
-        "image_ratio": "circle",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 2,
-        "column_alignment": "center",
-        "background_style": "none",
-        "color_scheme": "scheme-1",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 52,
-        "padding_bottom": 52
+        "subheading": "EXPLORE OUR SELECTION",
+        "title": "Popular Breweries & Distilleries",
+        "button_initial_label": "See More",
+        "button_1_label": "Popular Breweries",
+        "button_1_link": "shopify://collections/all",
+        "button_2_label": "Popular Distilleries",
+        "button_2_link": "shopify://collections/all"
+      }
+    },
+    "foxy_socials": {
+      "type": "foxy-socials",
+      "settings": {
+        "collection": "socials-and-events",
+        "subheading": "WHAT'S ON AT CRAFT & BERRY",
+        "title": "Upcoming Events",
+        "menu_subheading": "EVENTS & TASTINGS",
+        "menu_title": "Upcoming Schedule",
+        "tag": "SOCIALS & EVENTS",
+        "tag_style": "purple",
+        "products_limit": 6,
+        "button_label": "View All Events"
       }
     },
     "image_with_text_wN6LgK": {
@@ -270,12 +204,10 @@
   },
   "order": [
     "foxy_hero",
-    "rich_text",
+    "foxy_two_column",
     "foxy_dynamic_product_carousel_GfVzJh",
-    "collection_list_g4D9yc",
-    "collection_list_dM4mVe",
-    "collage",
-    "multicolumn",
+    "foxy_collage",
+    "foxy_socials",
     "image_with_text_wN6LgK"
   ]
 }
