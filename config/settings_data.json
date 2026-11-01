@@ -148,7 +148,9 @@
       "foxy-opening-times": {
         "type": "foxy-opening-times",
         "settings": {
+          "subheading": "Visit the shop",
           "title": "Opening Times",
+          "text": "",
           "disable_dynamic_script": false,
           "christmas_eve": false,
           "christmas_day": true,
@@ -159,8 +161,8 @@
           "bank_holiday_dates": "",
           "opening_time_monday": "Closed",
           "closing_time_monday": "Closed",
-          "opening_time_tuesday": "Closed",
-          "closing_time_tuesday": "Closed",
+          "opening_time_tuesday": "11AM",
+          "closing_time_tuesday": "7PM",
           "opening_time_wednesday": "11AM",
           "closing_time_wednesday": "7PM",
           "opening_time_thursday": "11AM",
